@@ -3,29 +3,39 @@ function sortear() {
     let de = parseInt(document.getElementById('de').value);
     let ate = parseInt(document.getElementById('ate').value);
 
-    if (de < ate) {
-        let sorteados = [];
-        let numero;
+    let intervalo = ate - de
 
-        for (let i = 0; i < quantidade; i++) {
-            numero = obterNumeroAleatorio(de, ate);
-            
-            while (sorteados.includes(numero)) {
-                numero = obterNumeroAleatorio(de, ate)
-            }
-
-            sorteados.push(numero);
-        }
-
-        let resultado = document.getElementById('resultado');
-        resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${sorteados} </label>`;
-
-        alterarStatusBotao();
-    } else {
+    if (quantidade > intervalo) {
+        alert('A quantidade de números sorteados não pode ser maior que o intervalo entre os números')
+        reiniciar()
+        alterarStatusBotao()
+        return
+    }
+    
+    if (de > ate) {
         alert('O número inicial deve ser menor que o número final!')
         reiniciar()
         alterarStatusBotao()
+        return
+    } 
+    
+    let sorteados = [];
+    let numero;
+
+    for (let i = 0; i < quantidade; i++) {
+        numero = obterNumeroAleatorio(de, ate);
+        
+        while (sorteados.includes(numero)) {
+            numero = obterNumeroAleatorio(de, ate)
+        }
+
+        sorteados.push(numero);
     }
+
+    let resultado = document.getElementById('resultado');
+    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${sorteados} </label>`;
+
+    alterarStatusBotao();
 }
 
 function obterNumeroAleatorio(min, max) {
